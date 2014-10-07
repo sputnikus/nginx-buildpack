@@ -13,35 +13,48 @@ NGINX_VERSION=1.5.7
 PCRE_VERSION=8.21
 HEADERS_MORE_VERSION=0.23
 
-nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-pcre_tarball_url=http://garr.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
-headers_more_nginx_module_url=https://github.com/agentzh/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
+cache_folder=$2/nginx-build
+cache_file=${cache_folder}/nginx-${NGINX_VERSION}-${PCRE_VERSION}-${HEADERS_MORE_VERSION}
 
-temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
+if [ -f $cache_file ]; then
+	echo "Using cached build"
+else
+	nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+	pcre_tarball_url=http://garr.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
+	headers_more_nginx_module_url=https://github.com/agentzh/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
 
-echo "Cache directory: $2"
+	temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
-cd $temp_dir
-echo "Temp dir: $temp_dir"
+	echo "Cache directory: $2"
 
-echo "Downloading $nginx_tarball_url"
-curl -L $nginx_tarball_url | tar xz
+	cd $temp_dir
+	echo "Temp dir: $temp_dir"
 
-echo "Downloading $pcre_tarball_url"
-(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xj )
+	echo "Downloading $nginx_tarball_url"
+	curl -L $nginx_tarball_url | tar xz
 
-echo "Downloading $headers_more_nginx_module_url"
-(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xz )
+	echo "Downloading $pcre_tarball_url"
+	(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xj )
 
-(
-	cd nginx-${NGINX_VERSION}
-	echo "Configuring nginx"
-	./configure \
-		--with-pcre=pcre-${PCRE_VERSION} \
-		--prefix=/tmp/nginx \
-		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
-		--with-http_gzip_static_module > /dev/null
-	echo "Building nginx"
-	make > /dev/null
-	cp objs/nginx $1
-)
+	echo "Downloading $headers_more_nginx_module_url"
+	(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xz )
+
+	(
+		cd nginx-${NGINX_VERSION}
+		echo "Configuring nginx"
+		./configure \
+			--with-pcre=pcre-${PCRE_VERSION} \
+			--prefix=/tmp/nginx \
+			--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
+			--with-http_gzip_static_module > /dev/null
+		echo "Building nginx"
+		make > /dev/null
+
+		# Remove old cached versions
+		rm -rf $cache_folder
+		mkdir -p $cache_folder
+		cp objs/nginx $cache_file
+	)
+fi
+
+cp $cache_file $1
