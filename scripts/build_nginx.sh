@@ -19,25 +19,29 @@ headers_more_nginx_module_url=https://github.com/agentzh/headers-more-nginx-modu
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
+echo "Cache directory: $2"
+
 cd $temp_dir
 echo "Temp dir: $temp_dir"
 
 echo "Downloading $nginx_tarball_url"
-curl -L $nginx_tarball_url | tar xzv
+curl -L $nginx_tarball_url | tar xz
 
 echo "Downloading $pcre_tarball_url"
-(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xvj )
+(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xj )
 
 echo "Downloading $headers_more_nginx_module_url"
-(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xvz )
+(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xz )
 
 (
 	cd nginx-${NGINX_VERSION}
+	echo "Configuring nginx"
 	./configure \
 		--with-pcre=pcre-${PCRE_VERSION} \
 		--prefix=/tmp/nginx \
 		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
-		--with-http_gzip_static_module
-	make
-  cp objs/nginx $1
+		--with-http_gzip_static_module > /dev/null
+	echo "Building nginx"
+	make > /dev/null
+	cp objs/nginx $1
 )
