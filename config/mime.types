@@ -24,6 +24,11 @@ types {
     image/x-ms-bmp                        bmp;
     image/svg+xml                         svg;
 
+    application/x-font-ttf                ttf;
+    font/opentype                         otf;
+    application/font-woff                 woff;
+    application/vnd.ms-fontobject         eot;
+
     application/java-archive              jar war ear;
     application/mac-binhex40              hqx;
     application/msword                    doc;
@@ -33,6 +38,7 @@ types {
     application/vnd.ms-excel              xls;
     application/vnd.ms-powerpoint         ppt;
     application/vnd.wap.wmlc              wmlc;
+    application/vnd.wap.xhtml+xml         xhtml;
     application/vnd.google-earth.kml+xml  kml;
     application/vnd.google-earth.kmz      kmz;
     application/x-7z-compressed           7z;
@@ -48,22 +54,23 @@ types {
     application/x-shockwave-flash         swf;
     application/x-stuffit                 sit;
     application/x-tcl                     tcl tk;
+    application/x-web-app-manifest+json   webapp;
     application/x-x509-ca-cert            der pem crt;
     application/x-xpinstall               xpi;
-    application/xhtml+xml                 xhtml;
     application/zip                       zip;
 
     application/octet-stream              bin exe dll;
     application/octet-stream              deb;
     application/octet-stream              dmg;
-    application/octet-stream              eot;
     application/octet-stream              iso img;
     application/octet-stream              msi msp msm;
+    application/octet-stream              gem;
 
     audio/midi                            mid midi kar;
     audio/mpeg                            mp3;
     audio/ogg                             ogg;
     audio/x-realaudio                     ra;
+    audio/x-wav                           wav;
 
     video/3gpp                            3gpp 3gp;
     video/mpeg                            mpeg mpg;
