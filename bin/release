@@ -2,9 +2,10 @@
 set -e
 
 erb $1/nginx.conf.erb > $1/nginx.conf
+echo "$(</app/nginx.conf)"
 
 cat << EOF
 ---
 default_process_types:
-  web: bin/nginx -c /app/nginx.conf
+  web: /app/bin/nginx -c /app/nginx.conf
 EOF
