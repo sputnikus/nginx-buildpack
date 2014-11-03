@@ -47,5 +47,6 @@ fi
 
 cp $cache_file $1
 mkdir -p $3/tmp/var/run/nginx
+mkdir -p $3/tmp/var/run/nginx/logs
 
 echo "-----> Done."
