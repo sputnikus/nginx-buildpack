@@ -5,7 +5,7 @@ set -e
 BINDIR=$(dirname "$0")
 
 mkdir -p "$1/bin/"
-$BINDIR/../scripts/build_nginx.sh "$1/bin/nginx" "$2"
+$BINDIR/../scripts/build_nginx.sh "$1/bin/nginx" "$2" "$1"
 nginx_version=$($1/bin/nginx -V 2>&1 | head -1 | awk '{ print $NF }')
 echo "-----> nginx-buildpack: Installed ${nginx_version} to /app/bin"
 
