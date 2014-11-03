@@ -2,8 +2,10 @@
 
 set -e
 
+BINDIR=$(dirname "$0")
+
 mkdir -p "$1/bin/"
-./scripts/build_nginx.sh "$1/bin/nginx" "$2"
+$BINDIR/../scripts/build_nginx.sh "$1/bin/nginx" "$2"
 nginx_version=$($1/bin/nginx -V 2>&1 | head -1 | awk '{ print $NF }')
 echo "-----> nginx-buildpack: Installed ${nginx_version} to app/bin"
 cp bin/start-nginx "$1/bin/"
@@ -11,11 +13,11 @@ echo '-----> nginx-buildpack: Added start-nginx to app/bin'
 
 mkdir -p "$1/config"
 
-cp config/mime.types "$1/config/"
+cp $BINDIR/../config/mime.types "$1/config/"
 echo '-----> nginx-buildpack: Default mime.types copied to app/config/'
 
 if [[ ! -f $1/config/nginx.conf.erb ]]; then
-	cp config/nginx.conf.erb "$1/config/"
+	cp $BINDIR/../config/nginx.conf.erb "$1/config/"
 	echo '-----> nginx-buildpack: Default config copied to app/config.'
 else
 	echo '-----> nginx-buildpack: Custom config found in app/config.'

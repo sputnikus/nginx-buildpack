@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build NGINX and modules on Heroku.
+# Build NGINX and modules on Dokku.
 
 # fail hard
 set -o pipefail
