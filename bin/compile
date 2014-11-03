@@ -19,4 +19,8 @@ else
 	echo '-----> nginx-buildpack: Custom config found in /app'
 fi
 
+mkdir -p "$1/tmp/var/run/nginx/client_body_temp"
+mkdir -p "$1/tmp/var/run/nginx/proxy_temp"
+echo '-----> nginx-buildpack: Nginx temp dirs created'
+
 exit 0
