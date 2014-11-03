@@ -2,7 +2,7 @@
 set -e
 
 erb $1/nginx.conf.erb > $1/nginx.conf
-echo "$(</app/nginx.conf)"
+echo "$(<$1/nginx.conf)"
 
 cat << EOF
 ---

@@ -19,6 +19,4 @@ else
 	echo '-----> nginx-buildpack: Custom config found in /app'
 fi
 
-echo $1
-
 exit 0
