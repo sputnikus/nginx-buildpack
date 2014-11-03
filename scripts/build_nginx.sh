@@ -34,6 +34,7 @@ else
 	./configure \
 		--http-client-body-temp-path=/app/tmp/var/run/nginx/client_body_temp \
 		--http-proxy-temp-path=/app/tmp/var/run/nginx/proxy_temp \
+		--http-proxy-fastcgi-temp-path=/app/tmp/var/run/nginx/fastcgi_temp \
 		--with-pcre=pcre-${PCRE_VERSION} \
 		--with-http_realip_module \
 		--with-http_gzip_static_module > /dev/null
@@ -47,6 +48,6 @@ else
 fi
 
 cp $cache_file $1
-mkdir -p /app/tmp/var/run/nginx
+mkdir -p $1/tmp/var/run/nginx
 
 echo "-----> Done."
