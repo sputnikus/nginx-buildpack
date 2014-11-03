@@ -6,5 +6,5 @@ erb $1/config/nginx.conf.erb > $1/config/nginx.conf
 cat << EOF
 ---
 default_process_types:
-  web: bin/nginx -p . -c config/nginx.conf
+  web: bin/nginx -c /app/nginx.conf
 EOF

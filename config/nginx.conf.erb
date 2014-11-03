@@ -21,7 +21,7 @@ http {
 		client_body_timeout 5;
 
 		server {
-				listen <%= ENV["PORT"] %>;
+				listen <%= ENV['PORT'] %>;
 				server_name _;
 				keepalive_timeout 5;
 				root <%= ENV.fetch('root', '/app') %>;
