@@ -1,2 +1,12 @@
 #!/usr/bin/env bash
+set -e
+
+erb config/nginx.conf.erb > config/nginx.conf
+
+cat << EOF
+---
+default_process_types:
+  web: bin/nginx -p . -c config/nginx.conf
+EOF
+
 echo "--- {}"
