@@ -6,7 +6,7 @@ erb $1/config/nginx.conf.erb > $1/config/nginx.conf
 cat << EOF
 ---
 default_process_types:
-  web: bin/nginx -p . -c config/nginx.conf
+  web: $1/bin/nginx -p . -c $1/config/nginx.conf
 EOF
 
 echo "--- {}"
