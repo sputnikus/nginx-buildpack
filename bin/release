@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-erb $1/config/nginx.conf.erb > $1/config/nginx.conf
+erb $1/nginx.conf.erb > $1/nginx.conf
 
 cat << EOF
 ---
