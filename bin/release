@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-erb $1/nginx.conf.erb > $1/nginx.conf
-echo "$(<$1/nginx.conf)"
-
 cat << EOF
 ---
 default_process_types:
-  web: /app/bin/nginx -c /app/nginx.conf
+  web: erb /app/nginx.conf.erb > /app/nginx.conf && /app/bin/nginx -c /app/nginx.conf
 EOF
