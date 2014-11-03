@@ -5,7 +5,7 @@
 set -o pipefail
 
 NGINX_VERSION=1.6.2
-PCRE_VERSION=8.34
+PCRE_VERSION=8.36
 
 dep_dirname=nginx-${NGINX_VERSION}
 dep_archive_name=${dep_dirname}.tar.gz
